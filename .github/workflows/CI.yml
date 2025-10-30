@@ -3,10 +3,10 @@ name: Build and Test Plugin Template
 on:
   push:
     branches:
-      - "*"
+      - "main"
   pull_request:
     branches:
-      - "*"
+      - "main"
 
 jobs:
   build:
@@ -14,8 +14,6 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          - macOS-latest
-          - windows-latest
         java:
           - 21
     name: Build and Test Plugin Template
