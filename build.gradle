@@ -2,36 +2,52 @@ import org.opensearch.gradle.test.RestIntegTestTask
 
 apply plugin: 'java'
 apply plugin: 'idea'
+apply plugin: 'eclipse'
 apply plugin: 'opensearch.opensearchplugin'
 apply plugin: 'opensearch.yaml-rest-test'
 apply plugin: 'opensearch.pluginzip'
+apply plugin: 'opensearch.java-agent'
 
 def pluginName = 'opensearch-analysis-morfologik'
 def pluginDescription = 'Morfologik Polish Lemmatizer plugin for OpenSearch'
-def projectPath = 'org.opensearch'
+def packagePath = 'org.opensearch'
 def pathToPlugin = 'plugin.morfologik'
 def pluginClassName = 'MorfologikPlugin'
 group = "org.opensearch"
-version = opensearch_version - "-SNAPSHOT"
+
+java {
+    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_21
+}
+
+tasks.register("preparePluginPathDirs") {
+    mustRunAfter clean
+    doLast {
+        def newPath = pathToPlugin.replace(".", "/")
+        mkdir "src/main/java/$packagePath/$newPath"
+        mkdir "src/test/java/$packagePath/$newPath"
+        mkdir "src/yamlRestTest/java/$packagePath/$newPath"
+    }
+}
 
 publishing {
     publications {
         pluginZip(MavenPublication) { publication ->
             pom {
-              name = pluginName
-              description = pluginDescription
-              licenses {
-                license {
-                  name = "The Apache License, Version 2.0"
-                  url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                name = pluginName
+                description = pluginDescription
+                licenses {
+                    license {
+                        name = "The Apache License, Version 2.0"
+                        url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                    }
                 }
-              }
-              developers {
-                developer {
-                  name = "ksawierek"
-                  url = "https://github.com/ksawierek"
+                developers {
+                    developer {
+                        name = "ksawierek"
+                        url = "https://github.com/ksawierek"
+                    }
                 }
-              }
             }
         }
     }
@@ -40,11 +56,10 @@ publishing {
 opensearchplugin {
     name pluginName
     description pluginDescription
-    classname "${projectPath}.${pathToPlugin}.${pluginClassName}"
+    classname "${packagePath}.${pathToPlugin}.${pluginClassName}"
     licenseFile rootProject.file('LICENSE.txt')
     noticeFile rootProject.file('NOTICE.txt')
 }
-
 
 // This requires an additional Jar not published as part of build-tools
 loggerUsageCheck.enabled = false
@@ -54,14 +69,14 @@ validateNebulaPom.enabled = false
 
 buildscript {
     ext {
-        opensearch_version = System.getProperty("opensearch.version", "2.11.1")
+        opensearch_version = System.getProperty("opensearch.version", "3.3.1")
         lucene_version = "9.7.0"
         morfologik_version = "2.1.9"
     }
 
     repositories {
         mavenLocal()
-        maven { url "https://aws.oss.sonatype.org/content/repositories/snapshots" }
+        maven { url "https://ci.opensearch.org/ci/dbc/snapshots/maven/" }
         mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
     }
@@ -73,7 +88,7 @@ buildscript {
 
 repositories {
     mavenLocal()
-    maven { url "https://aws.oss.sonatype.org/content/repositories/snapshots" }
+    maven { url "https://ci.opensearch.org/ci/dbc/snapshots/maven/" }
     mavenCentral()
     maven { url "https://plugins.gradle.org/m2/" }
 }
@@ -120,7 +135,7 @@ task updateVersion {
     doLast {
         ext.newVersion = System.getProperty('newVersion')
         println "Setting version to ${newVersion}."
-         // String tokenization to support -SNAPSHOT
+        // String tokenization to support -SNAPSHOT
         ant.replaceregexp(file:'build.gradle', match: '"opensearch.version", "\\d.*"', replace: '"opensearch.version", "' + newVersion.tokenize('-')[0] + '-SNAPSHOT"', flags:'g', byline:true)
     }
 }

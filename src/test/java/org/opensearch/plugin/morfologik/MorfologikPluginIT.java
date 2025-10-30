@@ -8,10 +8,8 @@
 package org.opensearch.plugin.morfologik;
 
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakScope;
-import org.apache.http.ParseException;
-import org.apache.http.util.EntityUtils;
-import org.hamcrest.MatcherAssert;
-import org.junit.Ignore;
+import org.apache.hc.core5.http.ParseException;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.opensearch.client.Request;
 import org.opensearch.client.Response;
 import org.opensearch.plugins.Plugin;
@@ -34,10 +32,10 @@ public class MorfologikPluginIT extends OpenSearchIntegTestCase {
     }
 
     public void testPluginInstalled() throws IOException, ParseException {
-        Response response = createRestClient().performRequest(new Request("GET", "/_cat/plugins"));
+        Response response = getRestClient().performRequest(new Request("GET", "/_cat/plugins"));
         String body = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
 
         logger.info("response body: {}", body);
-        MatcherAssert.assertThat(body, containsString("opensearch-analysis-morfologik"));
+        assertThat(body, containsString("opensearch-analysis-morfologik"));
     }
 }
