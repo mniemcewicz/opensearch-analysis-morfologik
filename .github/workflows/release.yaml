@@ -28,7 +28,7 @@ jobs:
 
       - name: 'Upload release'
         run: |
-          ./gh release upload ${{ github.event.release.tag_name }} build/distributions/opensearch-analysis-morfologik-${{ github.event.release.tag_name }}.zip
+          gh release upload ${{ github.event.release.tag_name }} build/distributions/opensearch-analysis-morfologik-${{ github.event.release.tag_name }}.zip
         env:
           GITHUB_TOKEN: ${{ github.TOKEN }}
         shell: bash
