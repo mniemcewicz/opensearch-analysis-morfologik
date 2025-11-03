@@ -15,7 +15,7 @@ base on [Morfologik](http://morfologik.blogspot.com).
 opensearch-plugin install https://github.com/Ksawierek/opensearch-analysis-morfologik/releases/download/2.11.1/opensearch-analysis-morfologik-2.11.1.zip
 ```
 
-### Containerfile
+### Containerfile 
 ```
 FROM opensearchproject/opensearch:2.11.1
 
