@@ -22,6 +22,7 @@ FROM opensearchproject/opensearch:2.11.1
 RUN opensearch-plugin install https://github.com/Ksawierek/opensearch-analysis-morfologik/releases/download/2.11.1/opensearch-analysis-morfologik-2.11.1.zip
 ```
 
+
 Helpful links:
 * https://github.com/apache/lucene 
 * https://github.com/morfologik/morfologik-stemming
