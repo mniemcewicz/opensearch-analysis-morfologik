@@ -99,6 +99,7 @@ dependencies {
     implementation "org.carrot2:morfologik-stemming:${morfologik_version}"
     implementation "org.carrot2:morfologik-polish:${morfologik_version}"
     implementation "org.carrot2:morfologik-fsa:${morfologik_version}"
+    implementation 'com.google.errorprone:error_prone_annotations:2.45.0'
 }
 
 test {
