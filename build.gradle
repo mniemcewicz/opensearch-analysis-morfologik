@@ -14,7 +14,7 @@ def packagePath = 'org.opensearch'
 def pathToPlugin = 'plugin.morfologik'
 def pluginClassName = 'MorfologikPlugin'
 group = "org.opensearch"
-version = "3.6.0"
+version = "3.9.0"
 
 java {
     targetCompatibility = JavaVersion.VERSION_21
@@ -70,9 +70,9 @@ validateNebulaPom.enabled = false
 
 buildscript {
     ext {
-        opensearch_version = System.getProperty("opensearch.version", "3.6.0")
-        lucene_version = "10.3.2"
-        morfologik_version = "2.1.9"
+        opensearch_version = System.getProperty("opensearch.version", "3.9.0")
+        lucene_version = "10.5.1"
+        morfologik_version = "2.2.0"
     }
 
     repositories {
@@ -98,6 +98,10 @@ configurations.configureEach {
     resolutionStrategy {
         force "com.google.errorprone:error_prone_annotations:${versions.error_prone_annotations}"
     }
+}
+
+configurations.configureEach {
+    resolutionStrategy.force 'org.jspecify:jspecify:1.0.1'
 }
 
 dependencies {
