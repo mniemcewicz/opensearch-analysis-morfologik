@@ -22,6 +22,13 @@ import java.util.Map;
  */
 public class MorfologikPlugin extends Plugin implements AnalysisPlugin {
 
+    
+    /**
+     * Creates a new Morfologik plugin.
+     */
+    public MorfologikPlugin() {
+        super();
+    }
     /**
      * Analyzer name.
      */
