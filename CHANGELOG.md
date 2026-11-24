@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.9.0] - 2026-11-24
+- Upgraded to OpenSearch 3.9.0
+
 ## [3.6.0] - 2026-04-20
 - Upgraded to OpenSearch 3.6.0
 
